@@ -1,0 +1,18 @@
+services:
+  server:
+    build:
+      context: .
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      DB_FILENAME: "/var/lib/kutt/data.sqlite"
+    volumes:
+      - db_data_sqlite:/var/lib/kutt
+      - custom:/kutt/custom
+    # Bind only to localhost. Caddy is the only public entry point.
+    ports:
+      - "127.0.0.1:3000:3000"
+volumes:
+  db_data_sqlite:
+  custom:

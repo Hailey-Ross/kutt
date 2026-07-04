@@ -1,5 +1,6 @@
 .env
 .vscode/
+.claude/
 logs
 client/.next/
 node_modules/
@@ -14,3 +15,7 @@ docs/api/static
 **/.DS_Store
 db/*
 !db/.gitkeep
+
+# local deployment secrets (contain the JWT secret, never commit)
+deploy/.env
+deploy/.env.production

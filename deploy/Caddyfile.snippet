@@ -1,0 +1,7 @@
+# Add this block to your Caddyfile on the VPS, then reload Caddy.
+# Caddy provisions TLS automatically. Kutt listens on localhost:3000 only.
+
+l.hails.live {
+    encode zstd gzip
+    reverse_proxy 127.0.0.1:3000
+}
