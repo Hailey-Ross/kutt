@@ -1,69 +1,182 @@
 /* =====================================================================
-   hails.cc theme for Kutt — homepage only
-   Scoped under body.hails-home (the class is added by the homepage view's
-   init script), so this file loads site-wide but only styles the homepage.
-   Matches https://hails.cc: black base, full-bleed randomized photo, white
-   particle overlay, dark glassy content panels.
+   hails.cc theme for Kutt — site wide
+   Applies to every page. The layout override (custom/views/layout.hbs)
+   supplies the particle canvas and picks a random background photo.
+   Black base, full bleed photo, white particle overlay, dark glassy panels.
    ===================================================================== */
 
-body.hails-home {
-  /* dark palette: redefine Kutt's design tokens for homepage descendants */
+/* ---------------------------------------------------------------------
+   Design tokens. Kutt drives most of its colors through these, so
+   redefining them here retints the bulk of the UI in one place.
+   --------------------------------------------------------------------- */
+:root {
   --bg-color: #000;
   --text-color: hsl(0, 0%, 92%);
   --secondary-text-color: hsl(0, 0%, 72%);
   --input-label-color: hsl(0, 0%, 92%);
   --underline-color: hsl(0, 0%, 60%);
+
+  --button-bg: linear-gradient(to right, hsl(220, 8%, 26%), hsl(220, 8%, 19%));
+  --button-bg-box-shadow-color: rgba(0, 0, 0, 0.5);
+  --button-action-shadow-color: rgba(0, 0, 0, 0.35);
+
+  --input-shadow-color: rgba(0, 0, 0, 0.35);
+  --input-hover-shadow-color: rgba(0, 0, 0, 0.5);
+
   --table-bg-color: rgba(20, 22, 28, 0.55);
+  --table-shadow-color: rgba(0, 0, 0, 0.45);
   --table-tr-hover-bg-color: rgba(255, 255, 255, 0.06);
   --table-tr-border-color: rgba(255, 255, 255, 0.08);
   --table-head-tr-border-color: rgba(255, 255, 255, 0.12);
+  --table-status-gray-bg-color: rgba(255, 255, 255, 0.1);
 
-  /* full-bleed background photo (image URL is set per-load by the init script) */
+  --copy-icon-bg-color: rgba(255, 255, 255, 0.08);
+  --copy-icon-shadow-color: rgba(0, 0, 0, 0.35);
+}
+
+/* ---------------------------------------------------------------------
+   Page canvas
+   --------------------------------------------------------------------- */
+body {
   background-color: #000;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
+  color: var(--text-color);
 }
 
-/* particle layer sits behind everything; transparent canvas lets the photo show through */
-body.hails-home #particles-js {
+/* particle layer sits behind everything; transparent canvas lets the photo through */
+#particles-js {
   position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events: none;
 }
-body.hails-home #particles-js canvas { background: transparent !important; }
+#particles-js canvas { background: transparent !important; }
 
 /* lift real content above the particle layer */
-body.hails-home .main-wrapper { position: relative; z-index: 1; }
+.main-wrapper { position: relative; z-index: 1; }
 
-/* keep header/footer text legible over any photo (some backgrounds are light) */
-body.hails-home header a,
-body.hails-home header .logo,
-body.hails-home footer,
-body.hails-home footer a {
+/* keep chrome legible over the lighter backgrounds */
+header a,
+header .logo,
+footer,
+footer a {
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
 }
 
-/* shortener box: dark glassy card */
-body.hails-home main {
+/* ---------------------------------------------------------------------
+   Glassy panels. These are the top level containers each page renders
+   into: main (shortener), the link and admin tables, and the generic
+   .section-container used by settings, stats, 404, error, banned.
+   --------------------------------------------------------------------- */
+main,
+#main-table-wrapper,
+.section-container,
+.dialog .box {
   background: rgba(15, 17, 22, 0.5);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
-  padding: 2rem 1.5rem;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
 }
 
-/* links table (shown when signed in): matching glassy panel */
-body.hails-home #main-table-wrapper {
-  background: rgba(15, 17, 22, 0.5);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-  padding: 1.5rem;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+main { padding: 2rem 1.5rem; }
+#main-table-wrapper,
+.section-container { padding: 1.5rem; }
+
+/* the dialog already positions itself; only the surface needs restyling */
+.dialog .box { background-color: rgba(15, 17, 22, 0.85); }
+
+/* ---------------------------------------------------------------------
+   Form controls. These hardcode white in the base stylesheet.
+   --------------------------------------------------------------------- */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+select,
+textarea {
+  background-color: rgba(255, 255, 255, 0.06);
+  color: var(--text-color);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
+
+input::placeholder,
+textarea::placeholder { color: hsl(0, 0%, 55%); }
+
+input[type="checkbox"] {
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* browser autofill repaints inputs white; this keeps them dark */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--text-color);
+  -webkit-box-shadow: 0 0 0 1000px hsl(220, 10%, 14%) inset;
+}
+
+/* ---------------------------------------------------------------------
+   Tables
+   --------------------------------------------------------------------- */
+table {
+  background-color: transparent;
+  color: var(--text-color);
+}
+
+table .tab a {
+  background-color: rgba(255, 255, 255, 0.06);
+  color: var(--text-color);
+}
+table .tab a.active { background-color: rgba(255, 255, 255, 0.14); }
+
+#main-table-wrapper table tr.edit { background-color: rgba(255, 255, 255, 0.05); }
+
+/* the base stylesheet fades long cells out to white; fade to the panel instead */
+#main-table-wrapper table tbody td.right-fade:after {
+  background: linear-gradient(to left, rgba(17, 19, 24, 0.95), rgba(17, 19, 24, 0));
+}
+
+/* ---------------------------------------------------------------------
+   Buttons
+   --------------------------------------------------------------------- */
+button.nav {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: var(--text-color);
+}
+button.nav:disabled {
+  background-color: rgba(255, 255, 255, 0.03);
+  color: hsl(0, 0%, 45%);
+}
+
+/* row action buttons: pale pastel fills in the base stylesheet, tinted dark here.
+   The icon strokes stay as they are so each action keeps its color coding. */
+a.button.action.delete,
+button.action.delete { background: hsla(0, 70%, 60%, 0.16); }
+
+a.button.action.edit,
+button.action.edit { background: hsla(46, 90%, 55%, 0.16); }
+
+a.button.action.qrcode,
+button.action.qrcode { background: rgba(255, 255, 255, 0.1); }
+
+a.button.action.qrcode svg { fill: hsl(0, 0%, 85%); }
+
+a.button.action.stats,
+button.action.stats { background: hsla(260, 90%, 65%, 0.18); }
+
+a.button.action.ban,
+button.action.ban { background: hsla(10, 80%, 60%, 0.16); }
+
+/* ---------------------------------------------------------------------
+   Misc
+   --------------------------------------------------------------------- */
+hr { background-color: rgba(255, 255, 255, 0.1); }
+
+span.underline { border-bottom-color: rgba(255, 255, 255, 0.4); }
+
+a { color: inherit; }
