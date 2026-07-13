@@ -1,0 +1,39 @@
+<div id="particles-js"></div>
+{{> header}}
+{{> shortener}}
+{{#if user}}
+  {{> links/table}}
+{{/if}}
+{{> footer}}
+
+{{#extend "scripts"}}
+  <script src="https://assets.hails.cc/particlejs/particles.js"></script>
+  <script>
+    document.body.classList.add('hails-home');
+    var bgs = [
+      'https://assets.hails.cc/i/bg1.jpg',
+      'https://assets.hails.cc/i/bg2_transFlag.jpg',
+      'https://assets.hails.cc/i/bg3_paintIt.png'
+    ];
+    document.body.style.backgroundImage =
+      "url('" + bgs[Math.floor(Math.random() * bgs.length)] + "')";
+    particlesJS("particles-js", {
+      particles: {
+        number: { value: 91, density: { enable: true, value_area: 800 } },
+        color: { value: "#ffffff" },
+        shape: { type: "polygon", stroke: { width: 0, color: "#000000" }, polygon: { nb_sides: 5 } },
+        opacity: { value: 0.83, random: true, anim: { enable: true, speed: 1, opacity_min: 0, sync: false } },
+        size: { value: 2, random: true, anim: { enable: false, speed: 4, size_min: 0.3, sync: false } },
+        line_linked: { enable: false, distance: 112, color: "#8e8e8e", opacity: 0.34, width: 1 },
+        move: { enable: true, speed: 1, direction: "none", random: true, straight: false,
+                out_mode: "out", bounce: false, attract: { enable: true, rotateX: 600, rotateY: 600 } }
+      },
+      interactivity: {
+        detect_on: "window",
+        events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" }, resize: true },
+        modes: { repulse: { distance: 97, duration: 0.4 }, push: { particles_nb: 4 } }
+      },
+      retina_detect: true
+    });
+  </script>
+{{/extend}}

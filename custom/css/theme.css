@@ -1,0 +1,69 @@
+/* =====================================================================
+   hails.cc theme for Kutt — homepage only
+   Scoped under body.hails-home (the class is added by the homepage view's
+   init script), so this file loads site-wide but only styles the homepage.
+   Matches https://hails.cc: black base, full-bleed randomized photo, white
+   particle overlay, dark glassy content panels.
+   ===================================================================== */
+
+body.hails-home {
+  /* dark palette: redefine Kutt's design tokens for homepage descendants */
+  --bg-color: #000;
+  --text-color: hsl(0, 0%, 92%);
+  --secondary-text-color: hsl(0, 0%, 72%);
+  --input-label-color: hsl(0, 0%, 92%);
+  --underline-color: hsl(0, 0%, 60%);
+  --table-bg-color: rgba(20, 22, 28, 0.55);
+  --table-tr-hover-bg-color: rgba(255, 255, 255, 0.06);
+  --table-tr-border-color: rgba(255, 255, 255, 0.08);
+  --table-head-tr-border-color: rgba(255, 255, 255, 0.12);
+
+  /* full-bleed background photo (image URL is set per-load by the init script) */
+  background-color: #000;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+/* particle layer sits behind everything; transparent canvas lets the photo show through */
+body.hails-home #particles-js {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+body.hails-home #particles-js canvas { background: transparent !important; }
+
+/* lift real content above the particle layer */
+body.hails-home .main-wrapper { position: relative; z-index: 1; }
+
+/* keep header/footer text legible over any photo (some backgrounds are light) */
+body.hails-home header a,
+body.hails-home header .logo,
+body.hails-home footer,
+body.hails-home footer a {
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+}
+
+/* shortener box: dark glassy card */
+body.hails-home main {
+  background: rgba(15, 17, 22, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+}
+
+/* links table (shown when signed in): matching glassy panel */
+body.hails-home #main-table-wrapper {
+  background: rgba(15, 17, 22, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+}

@@ -9,10 +9,11 @@ services:
       DB_FILENAME: "/var/lib/kutt/data.sqlite"
     volumes:
       - db_data_sqlite:/var/lib/kutt
-      - custom:/kutt/custom
+      # Bind mount, not a named volume. A named volume is only seeded from the
+      # image when Docker first creates it, so theme changes would never appear.
+      - ./custom:/kutt/custom
     # Bind only to localhost. Caddy is the only public entry point.
     ports:
       - "127.0.0.1:3000:3000"
 volumes:
   db_data_sqlite:
-  custom:
