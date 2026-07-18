@@ -70,4 +70,15 @@ router.post(
   asyncHandler(user.ban)
 );
 
+router.post(
+  "/admin/approve/:id",
+  locals.viewTemplate("partials/admin/dialog/approve_user"),
+  asyncHandler(auth.apikey),
+  asyncHandler(auth.jwt),
+  asyncHandler(auth.admin),
+  validators.approveUser,
+  asyncHandler(helpers.verify),
+  asyncHandler(user.approve)
+);
+
 module.exports = router;

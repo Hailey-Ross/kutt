@@ -34,6 +34,13 @@
       <span class="status gray">NOT VERIFIED</span>
     {{/if}}
   </td>
+  <td class="users-approved">
+    {{#if approved}}
+      <span class="status green">APPROVED</span>
+    {{else}}
+      <span class="status yellow">PENDING</span>
+    {{/if}}
+  </td>
   <td class="users-role">
     {{#ifEquals role "ADMIN"}}
     <span class="status red">ADMIN</span>

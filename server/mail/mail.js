@@ -2,7 +2,7 @@ const nodemailer = require("nodemailer");
 const path = require("node:path");
 const fs = require("node:fs");
 
-const { resetMailText, verifyMailText, changeEmailText } = require("./text");
+const { resetMailText, verifyMailText, changeEmailText, approvedMailText } = require("./text");
 const { CustomError } = require("../utils");
 const env = require("../env");
 
@@ -24,11 +24,13 @@ const transporter = nodemailer.createTransport(mailConfig);
 const resetEmailTemplatePath = path.join(__dirname, "template-reset.html");
 const verifyEmailTemplatePath = path.join(__dirname, "template-verify.html");
 const changeEmailTemplatePath = path.join(__dirname,"template-change-email.html");
+const approvedEmailTemplatePath = path.join(__dirname, "template-approved.html");
 
 
-let resetEmailTemplate, 
+let resetEmailTemplate,
     verifyEmailTemplate,
-    changeEmailTemplate;
+    changeEmailTemplate,
+    approvedEmailTemplate;
 
 // only read email templates if email is enabled
 if (env.MAIL_ENABLED) {
@@ -42,6 +44,10 @@ if (env.MAIL_ENABLED) {
     .replace(/{{site_name}}/gm, env.SITE_NAME);
   changeEmailTemplate = fs
     .readFileSync(changeEmailTemplatePath, { encoding: "utf-8" })
+    .replace(/{{domain}}/gm, env.DEFAULT_DOMAIN)
+    .replace(/{{site_name}}/gm, env.SITE_NAME);
+  approvedEmailTemplate = fs
+    .readFileSync(approvedEmailTemplatePath, { encoding: "utf-8" })
     .replace(/{{domain}}/gm, env.DEFAULT_DOMAIN)
     .replace(/{{site_name}}/gm, env.SITE_NAME);
 }
@@ -67,6 +73,28 @@ async function verification(user) {
 
   if (!mail.accepted.length) {
     throw new CustomError("Couldn't send verification email. Try again later.");
+  }
+}
+
+async function approved(user) {
+  if (!env.MAIL_ENABLED) {
+    throw new Error("Attempting to send approval email but email is not enabled.");
+  };
+
+  const mail = await transporter.sendMail({
+    from: env.MAIL_FROM || env.MAIL_USER,
+    to: user.email,
+    subject: "Your account has been approved",
+    text: approvedMailText
+      .replace(/{{domain}}/gm, env.DEFAULT_DOMAIN)
+      .replace(/{{site_name}}/gm, env.SITE_NAME),
+    html: approvedEmailTemplate
+      .replace(/{{domain}}/gm, env.DEFAULT_DOMAIN)
+      .replace(/{{site_name}}/gm, env.SITE_NAME)
+  });
+
+  if (!mail.accepted.length) {
+    throw new CustomError("Couldn't send approval email. Try again later.");
   }
 }
 
@@ -137,6 +165,7 @@ async function sendReportEmail(link) {
 }
 
 module.exports = {
+  approved,
   changeEmail,
   verification,
   resetPasswordToken,

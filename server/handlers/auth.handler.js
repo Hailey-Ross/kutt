@@ -32,6 +32,7 @@ function authenticate(type, error, isStrict, redirect) {
         redirect &&
         ((!user && isStrict) ||
         (user && isStrict && !user.verified) ||
+        (user && isStrict && env.REQUIRE_ADMIN_APPROVAL && !user.approved) ||
         (user && user.banned))
       ) {
         if (redirect === "page") {
@@ -56,6 +57,10 @@ function authenticate(type, error, isStrict, redirect) {
       if (user && isStrict && !user.verified) {
         throw new CustomError("Your email address is not verified. " +
           "Sign up to get the verification link again.", 400);
+      }
+
+      if (user && isStrict && env.REQUIRE_ADMIN_APPROVAL && !user.approved) {
+        throw new CustomError("Your account is pending admin approval.", 403);
       }
 
       if (user) {
@@ -99,7 +104,7 @@ async function signup(req, res) {
   const password = await bcrypt.hash(req.body.password, salt);
   
   const user = await query.user.add(
-    { email: req.body.email, password },
+    { email: req.body.email, password, approved: !env.REQUIRE_ADMIN_APPROVAL },
     req.user
   );
   

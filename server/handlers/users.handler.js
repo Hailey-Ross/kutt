@@ -66,6 +66,7 @@ async function getAdmin(req, res) {
   const { role, search } = req.query;
   const userId = req.user.id;
   const verified = utils.parseBooleanQuery(req.query.verified);
+  const approved = utils.parseBooleanQuery(req.query.approved);
   const banned = utils.parseBooleanQuery(req.query.banned);
   const domains = utils.parseBooleanQuery(req.query.domains);
   const links = utils.parseBooleanQuery(req.query.links);
@@ -73,6 +74,7 @@ async function getAdmin(req, res) {
   const match = {
     ...(role && { role }),
     ...(verified !== undefined && { verified }),
+    ...(approved !== undefined && { approved }),
     ...(banned !== undefined && { banned }),
   };
 
@@ -154,6 +156,43 @@ async function ban(req, res) {
   return res.status(200).send({ message: "Banned user successfully." });
 }
 
+async function approve(req, res) {
+  const { id } = req.params;
+
+  // 1. check if user exists
+  const user = await query.user.find({ id });
+
+  if (!user) {
+    throw new utils.CustomError("No user has been found.", 400);
+  }
+
+  if (user.approved) {
+    throw new utils.CustomError("User has been approved already.", 400);
+  }
+
+  // 2. approve user
+  await query.user.update({ id }, { approved: true });
+
+  // 3. let the user know they've been approved (don't block on email failure)
+  if (env.MAIL_ENABLED) {
+    await mail.approved(user).catch(error => {
+      console.error("Send approval email error:\n", error);
+    });
+  }
+
+  // 4. send response
+  if (req.isHTML) {
+    res.setHeader("HX-Reswap", "outerHTML");
+    res.setHeader("HX-Trigger", "reloadMainTable");
+    res.render("partials/admin/dialog/approve_user_success", {
+      email: user.email,
+    });
+    return;
+  }
+
+  return res.status(200).send({ message: "Approved user successfully." });
+}
+
 async function create(req, res) {
   const salt = await bcrypt.genSalt(12);
   req.body.password = await bcrypt.hash(req.body.password, salt);
@@ -176,6 +215,7 @@ async function create(req, res) {
 }
 
 module.exports = {
+  approve,
   ban,
   create,
   get,

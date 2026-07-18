@@ -51,6 +51,7 @@ const spec = {
   DISALLOW_ANONYMOUS_LINKS: bool({ default: true }),
   DISALLOW_REGISTRATION: bool({ default: true }),
   DISALLOW_LOGIN_FORM: bool({ default: false }),
+  REQUIRE_ADMIN_APPROVAL: bool({ default: true }),
   SERVER_IP_ADDRESS: str({ default: "" }),
   SERVER_CNAME_ADDRESS: str({ default: "" }),
   CUSTOM_DOMAIN_USE_HTTPS: bool({ default: false }),

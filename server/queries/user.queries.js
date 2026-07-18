@@ -42,6 +42,7 @@ async function add(params, user) {
     password: params.password,
     ...(params.role && { role: params.role }),
     ...(params.verified !== undefined && { verified: params.verified }),
+    ...(params.approved !== undefined && { approved: params.approved }),
     verification_token: randomUUID(),
     verification_expires: utils.dateToUTC(addMinutes(new Date(), 60))
   };
@@ -109,6 +110,7 @@ const selectable_admin = [
   "users.id",
   "users.email",
   "users.verified",
+  "users.approved",
   "users.role",
   "users.banned",
   "users.banned_by_id",
@@ -122,6 +124,11 @@ function normalizeMatch(match) {
   if (newMatch.banned !== undefined) {
     newMatch["users.banned"] = newMatch.banned;
     delete newMatch.banned;
+  }
+
+  if (newMatch.approved !== undefined) {
+    newMatch["users.approved"] = newMatch.approved;
+    delete newMatch.approved;
   }
 
   return newMatch;

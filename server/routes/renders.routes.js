@@ -151,11 +151,19 @@ router.get(
 );
 
 router.get(
-  "/confirm-user-ban", 
+  "/confirm-user-ban",
   locals.noLayout,
   asyncHandler(auth.jwt),
-  asyncHandler(auth.admin), 
+  asyncHandler(auth.admin),
   asyncHandler(renders.confirmUserBan)
+);
+
+router.get(
+  "/confirm-user-approve",
+  locals.noLayout,
+  asyncHandler(auth.jwt),
+  asyncHandler(auth.admin),
+  asyncHandler(renders.confirmUserApprove)
 );
 
 router.get(

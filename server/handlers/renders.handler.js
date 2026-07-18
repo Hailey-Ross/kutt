@@ -203,6 +203,21 @@ async function confirmUserBan(req, res) {
   });
 }
 
+async function confirmUserApprove(req, res) {
+  const user = await query.user.find({ id: req.query.id });
+  if (!user) {
+    return res.render("partials/admin/dialog/message", {
+      layout: false,
+      message: "Could not find the user."
+    });
+  }
+  res.render("partials/admin/dialog/approve_user", {
+    layout: false,
+    email: user.email,
+    id: user.id
+  });
+}
+
 async function createUser(req, res) {
   res.render("partials/admin/dialog/create_user", {
     layout: false,
@@ -314,6 +329,7 @@ module.exports = {
   confirmDomainDeleteAdmin,
   confirmLinkBan,
   confirmLinkDelete,
+  confirmUserApprove,
   confirmUserBan,
   confirmUserDelete,
   createAdmin,

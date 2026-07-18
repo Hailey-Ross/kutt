@@ -328,6 +328,7 @@ const sanitize = {
     return {
       ...user,
       ...timestamps,
+      approved: !!user.approved,
       links_count: (user.links_count ?? 0).toLocaleString("en-US"),
       relative_created_at: getTimeAgo(timestamps.created_at),
       relative_updated_at: getTimeAgo(timestamps.updated_at),

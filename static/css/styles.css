@@ -1488,6 +1488,7 @@ table .short-link-wrapper { display: flex; align-items: center; }
 #main-table-wrapper table .status.gray { background-color: var(--table-status-gray-bg-color); }
 #main-table-wrapper table .status.green { background-color: hsl(102.4, 100%, 93.3%); }
 #main-table-wrapper table .status.red { background-color: hsl(0, 100%, 96.7%); }
+#main-table-wrapper table .status.yellow { background-color: hsl(45, 100%, 90%); }
 
 #main-table-wrapper table tr.no-data {
   flex: 1 1 auto; 

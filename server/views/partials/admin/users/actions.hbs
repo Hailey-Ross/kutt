@@ -1,4 +1,17 @@
 <td class="actions users-actions">
+  {{#unless approved}}
+    <button
+      class="action approve"
+      hx-on:click='openDialog("admin-table-dialog")'
+      hx-get="/confirm-user-approve"
+      hx-target="#admin-table-dialog .content-wrapper"
+      hx-indicator="#admin-table-dialog"
+      hx-vals='{"id":"{{id}}"}'
+      data-tooltip="Approve"
+    >
+      {{> icons/check}}
+    </button>
+  {{/unless}}
   {{#if banned}}
     <button class="action banned" disabled="true" data-tooltip="Banned">
       {{> icons/stop}}

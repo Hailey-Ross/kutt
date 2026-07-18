@@ -28,6 +28,11 @@
           <option value="true" {{#ifEquals query.verified 'true'}}selected{{/ifEquals}}>Verified</option>
           <option value="false" {{#ifEquals query.verified 'false'}}selected{{/ifEquals}}>Not verified</option>
         </select>
+        <select id="users-select-approved" name="approved" class="table-input verification" hx-on:change="resetTableNav()">
+          <option value="">Approval...</option>
+          <option value="true" {{#ifEquals query.approved 'true'}}selected{{/ifEquals}}>Approved</option>
+          <option value="false" {{#ifEquals query.approved 'false'}}selected{{/ifEquals}}>Pending</option>
+        </select>
         <select id="users-select-banned" name="banned" class="table-input ban" hx-on:change="resetTableNav()">
           <option value="" selected>Banned...</option>
           <option value="true">Banned</option>
@@ -72,6 +77,7 @@
     <th class="users-email">Email</th>
     <th class="users-created-at">Created at</th>
     <th class="users-verified">Verified</th>
+    <th class="users-approved">Approved</th>
     <th class="users-role">Role</th>
     <th class="users-links-count">Total links</th>
     <th class="users-actions"></th>

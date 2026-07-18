@@ -2,4 +2,9 @@
   <h1>
     A verification email has been sent to you.
   </h1>
+  {{#if require_admin_approval}}
+    <p>
+      After you verify your email, an admin will review and approve your account before you can log in.
+    </p>
+  {{/if}}
 </div>

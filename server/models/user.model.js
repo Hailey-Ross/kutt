@@ -35,6 +35,10 @@ async function createUserTable(knex) {
         .boolean("verified")
         .notNullable()
         .defaultTo(false);
+      table
+        .boolean("approved")
+        .notNullable()
+        .defaultTo(true);
       table.timestamps(false, true);
     });
   }

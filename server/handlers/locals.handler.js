@@ -28,6 +28,7 @@ function config(req, res, next) {
   res.locals.server_cname_address = env.SERVER_CNAME_ADDRESS;
   res.locals.disallow_registration = env.DISALLOW_REGISTRATION;
   res.locals.disallow_login_form = env.DISALLOW_LOGIN_FORM;
+  res.locals.require_admin_approval = env.REQUIRE_ADMIN_APPROVAL;
   res.locals.login_disabled = env.DISALLOW_LOGIN_FORM && !env.OIDC_ENABLED;
   res.locals.oidc_enabled = env.OIDC_ENABLED;
   res.locals.oidc_button_text = env.OIDC_BUTTON_TEXT;
@@ -75,6 +76,7 @@ function adminTable(req, res, next) {
     search: req.query.search,
     user: req.query.user,
     verified: req.query.verified,
+    approved: req.query.approved,
   };
   next();
 }

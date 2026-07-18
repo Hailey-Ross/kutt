@@ -501,6 +501,12 @@ const deleteUserByAdmin = [
     .isNumeric()
 ];
 
+const approveUser = [
+  param("id", "ID is invalid.")
+    .exists({ checkFalsy: true, checkNull: true })
+    .isNumeric()
+];
+
 async function bannedDomain(domain) {
   const isBanned = await query.domain.find({
     address: domain,
@@ -536,6 +542,7 @@ async function bannedHost(domain) {
 module.exports = {
   addDomain,
   addDomainAdmin,
+  approveUser,
   banDomain,
   banLink,
   banUser,
