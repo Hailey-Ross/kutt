@@ -6,6 +6,8 @@
 
 [https://kutt.to](https://kutt.to)
 
+<p align="center"><img src="./static/images/preview.png" alt="Kutt preview"></p>
+
 > [!WARNING]
 > **[kutt.it](https://kutt.it) is NOT OWNED BY US.** It could be a phishing site. We had the domain but it has been deactivated by the Italian TLD registrar due to the lack of identification documents, and now it's owned by someone else.
 
