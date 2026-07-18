@@ -1,60 +1,78 @@
-<p align="center"><a href="https://kutt.to" title="kutt.to"><img src="https://raw.githubusercontent.com/thedevs-network/kutt/9d1c873897c3f5b9a1bd0c74dc5d23f2ed01f2ec/static/images/logo-github.png" alt="Kutt.to"></a></p>
+<p align="center"><img src="./static/images/preview.png" alt="hails.kutt"></p>
 
-# Kutt.to
+# hails.kutt
 
-**Kutt** is a modern URL shortener with support for custom domains. Create and edit links, view statistics, manage users, and more.
+A rethemed build of **[Kutt](https://github.com/thedevs-network/kutt)**, the modern URL shortener with support for custom domains. Create and edit links, view statistics, manage users, and more, now wrapped in a dark space theme.
 
-[https://kutt.to](https://kutt.to)
+Live at [https://hails.live](https://hails.live).
 
-<p align="center"><img src="./static/images/preview.png" alt="Kutt preview"></p>
-
-> [!WARNING]
-> **[kutt.it](https://kutt.it) is NOT OWNED BY US.** It could be a phishing site. We had the domain but it has been deactivated by the Italian TLD registrar due to the lack of identification documents, and now it's owned by someone else.
-
-
->  Please use [kutt.to](https://kutt.to), all the previous and the future links work with this domain as well.
-
-
-[![docker-build-release](https://github.com/thedevs-network/kutt/actions/workflows/docker-build-release.yaml/badge.svg)](https://github.com/thedevs-network/kutt/actions/workflows/docker-build-release.yaml)
-[![Uptime Status](https://uptime.betterstack.com/status-badges/v2/monitor/1ogaa.svg)](https://status.kutt.to)
-[![Contributions](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](https://github.com/thedevs-network/kutt/#contributing)
+[![Powered by Kutt](https://img.shields.io/badge/powered%20by-Kutt-8b5cf6.svg)](https://github.com/thedevs-network/kutt)
+[![Support Kutt](https://img.shields.io/badge/support-Kutt-ff69b4.svg)](https://btcpay.kutt.to/apps/L9Gc7PrnLykeRHkhsH2jHivBeEh/crowdfund)
 [![GitHub license](https://img.shields.io/github/license/thedevs-network/kutt.svg)](https://github.com/thedevs-network/kutt/blob/develop/LICENSE)
+
+> [!IMPORTANT]
+> **hails.kutt is only a reskin. All credit for the software belongs to [thedevs-network](https://github.com/thedevs-network) and the [Kutt contributors](https://github.com/thedevs-network/kutt/graphs/contributors).** Every feature, fix, and hour of maintenance is theirs.
+>
+> If Kutt is useful to you, please support the people who build it:
+>
+> * 💜 **Donate or sponsor:** [Kutt crowdfund](https://btcpay.kutt.to/apps/L9Gc7PrnLykeRHkhsH2jHivBeEh/crowdfund)
+> * ⭐ **Star the project:** [thedevs-network/kutt](https://github.com/thedevs-network/kutt)
+> * 🌐 **Use the official hosted instance:** [kutt.to](https://kutt.to)
+
+> [!NOTE]
+> This is a personal fork maintained by [Hailey](https://github.com/Hailey-Ross). The only real change is the **hails.cc theme** in [`/custom`](./custom): a full bleed space background, a white particle overlay, and dark glassy panels across every page. Everything else is stock Kutt, so all upstream features and updates carry straight over.
 
 ## Table of contents
 
-- [Key features](#key-features)
-- [Donations and sponsors](#donations-and-sponsors)
-- [Setup](#setup)
-- [Docker](#docker)
-- [API](#api)
-- [Configuration](#configuration)
-- [Themes and customizations](#themes-and-customizations)
-- [Browser extensions](#browser-extensions)
-- [Videos](#videos)
-- [Integrations](#integrations)
-- [Contributing](#contributing)
+* [Support the Kutt project](#support-the-kutt-project)
+* [The hails.cc theme](#the-hailscc-theme)
+* [Key features](#key-features)
+* [Setup](#setup)
+* [Docker](#docker)
+* [API](#api)
+* [Configuration](#configuration)
+* [Themes and customizations](#themes-and-customizations)
+* [Browser extensions](#browser-extensions)
+* [Videos](#videos)
+* [Integrations](#integrations)
+* [Contributing](#contributing)
+
+## Support the Kutt project
+
+hails.kutt exists only because of [Kutt](https://github.com/thedevs-network/kutt). All of the engineering, every feature, and the ongoing maintenance are the work of [thedevs-network](https://github.com/thedevs-network) and the [Kutt contributors](https://github.com/thedevs-network/kutt/graphs/contributors). Please give them your support:
+
+* 💜 **Donate or become a sponsor:** [Kutt crowdfund](https://btcpay.kutt.to/apps/L9Gc7PrnLykeRHkhsH2jHivBeEh/crowdfund)
+* ⭐ **Star the repository:** [thedevs-network/kutt](https://github.com/thedevs-network/kutt)
+* 🌐 **Use the official hosted instance:** [kutt.to](https://kutt.to)
+* 📖 **Read the official docs:** [docs.kutt.to](https://docs.kutt.to)
+
+If you like this reskin, the best thing you can do is support the upstream project.
+
+## The hails.cc theme
+
+This repo ships a site wide theme for Kutt, living entirely in the [`/custom`](./custom) folder so it never touches core code:
+
+* **[`custom/css/theme.css`](./custom/css/theme.css)** retints Kutt through its CSS variables: a black base, dark glassy panels, and soft shadows.
+* **[`custom/views/layout.hbs`](./custom/views/layout.hbs)** adds the particle canvas and picks a random full bleed space photo for the background.
+
+Because it rides on Kutt's own theming system, upstream updates pull in cleanly without losing the look. Want your own spin? Swap the CSS and background, or start from the [official theme guide](#themes-and-customizations) below.
 
 ## Key features
 
-- Created with self-host in mind:
-  - Zero configuration needed
-  - Easy setup with no build step
-  - Supporting various databases (SQLite, Postgres, MySQL)
-  - Ability to disable registration and anonymous links
-  - OpenID Connect (OIDC) login
-- Custom domain support
-- Set custom URLs, password, description, and expiration time for links
-- View, edit, delete and manage your links
-- Private statistics for shortened URLs
-- Admin page to manage users and links
-- Customizability and themes
-- RESTful API
-
-## Donations and sponsors
-
-Support the development of Kutt by making a donation or becoming an sponsor.
-
-[Donate or sponsor →](https://btcpay.kutt.to/apps/L9Gc7PrnLykeRHkhsH2jHivBeEh/crowdfund)
+* **Custom hails.cc theme** applied across every page (see [above](#the-hailscc-theme))
+* Created with self host in mind:
+  * Zero configuration needed
+  * Easy setup with no build step
+  * Supporting various databases (SQLite, Postgres, MySQL)
+  * Ability to disable registration and anonymous links
+  * OpenID Connect (OIDC) login
+* Custom domain support
+* Set custom URLs, password, description, and expiration time for links
+* View, edit, delete and manage your links
+* Private statistics for shortened URLs
+* Admin page to manage users and links
+* Customizability and themes
+* RESTful API
 
 ## Setup
 
@@ -150,7 +168,7 @@ You can use files for each of the variables by appending `_FILE` to the name of 
 
 ## Themes and customizations
 
-You can add styles, change images, or render custom HTML. Place your content inside the [`/custom`](./custom) folder according to below instructions.
+You can add styles, change images, or render custom HTML. Place your content inside the [`/custom`](./custom) folder according to below instructions. This repo's own [hails.cc theme](#the-hailscc-theme) is built exactly this way, so [`/custom`](./custom) doubles as a working example.
 
 #### How it works:
 
@@ -257,7 +275,7 @@ Download Kutt's extension for web browsers via below links.
 
 ## Contributing
 
-Pull requests are welcome. Open a discussion for feedback, requesting features, or discussing ideas.
+This repo is a themed fork. For the URL shortener itself (features, fixes, and everything that makes Kutt work), please contribute to the upstream project at [thedevs-network/kutt](https://github.com/thedevs-network/kutt), where pull requests and discussions are welcome. Issues about the hails.cc theme specifically can go [here](https://github.com/Hailey-Ross/kutt).
 
-Special thanks to [Thomas](https://github.com/trgwii) and [Muthu](https://github.com/MKRhere). Logo design by [Muthu](https://github.com/MKRhere).
+Kutt is built and maintained by [thedevs-network](https://github.com/thedevs-network). Special thanks to [Thomas](https://github.com/trgwii) and [Muthu](https://github.com/MKRhere). Logo design by [Muthu](https://github.com/MKRhere).
 
