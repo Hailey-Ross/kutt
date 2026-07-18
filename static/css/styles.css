@@ -1423,11 +1423,12 @@ main form label#advanced input {
 #main-table-wrapper table .actions a.button:last-child,
 #main-table-wrapper table .actions button:last-child { margin-right: 0; }
 
-#main-table-wrapper table .users-id { flex: 3 3 0; justify-content: flex-end; }
-#main-table-wrapper table .users-email { flex: 9 9 0; }
-#main-table-wrapper table .users-created-at { flex: 4 4 0; }
+#main-table-wrapper table .users-id { flex: 2 2 0; justify-content: flex-end; }
+#main-table-wrapper table .users-email { flex: 8 8 0; }
+#main-table-wrapper table .users-created-at { flex: 3 3 0; }
 #main-table-wrapper table .users-updated-at { flex: 4 4 0; }
 #main-table-wrapper table .users-verified { flex: 3 3 0; overflow: visible; }
+#main-table-wrapper table .users-approved { flex: 3 3 0; overflow: visible; }
 #main-table-wrapper table .users-role { flex: 2 2 0; overflow: visible; }
 #main-table-wrapper table .users-links-count { flex: 3 3 0; justify-content: flex-end; overflow: visible; }
 #main-table-wrapper table .users-actions { flex: 2 2 0; }
@@ -1444,8 +1445,9 @@ main form label#advanced input {
 #main-table-wrapper.admin-table-wrapper table td.short-link,
 #main-table-wrapper table td.users-email,
 #main-table-wrapper table td.domains-address,
-#main-table-wrapper table td.users-created-at, 
-#main-table-wrapper table td.users-verified { 
+#main-table-wrapper table td.users-created-at,
+#main-table-wrapper table td.users-verified,
+#main-table-wrapper table td.users-approved {
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
