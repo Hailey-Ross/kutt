@@ -20,6 +20,15 @@ const mailConfig = {
 
 const transporter = nodemailer.createTransport(mailConfig);
 
+// the verification email mentions the approval step only when it actually applies,
+// so the copy stays truthful if REQUIRE_ADMIN_APPROVAL is ever turned off
+const approvalNote = "After your email is verified, an admin will review and " +
+  "approve your account before you can log in.";
+const approvalNoteText = env.REQUIRE_ADMIN_APPROVAL ? "\n\n" + approvalNote : "";
+const approvalNoteHtml = env.REQUIRE_ADMIN_APPROVAL
+  ? '<p style="margin: 12px 0 0;font-size: 14px;line-height: 25px">' + approvalNote + "</p>"
+  : "";
+
 // Read email templates
 const resetEmailTemplatePath = path.join(__dirname, "template-reset.html");
 const verifyEmailTemplatePath = path.join(__dirname, "template-verify.html");
@@ -63,10 +72,12 @@ async function verification(user) {
     subject: "Verify your account",
     text: verifyMailText
       .replace(/{{verification}}/gim, user.verification_token)
+      .replace(/{{approval_note}}/gm, approvalNoteText)
       .replace(/{{domain}}/gm, env.DEFAULT_DOMAIN)
       .replace(/{{site_name}}/gm, env.SITE_NAME),
     html: verifyEmailTemplate
       .replace(/{{verification}}/gim, user.verification_token)
+      .replace(/{{approval_note}}/gm, approvalNoteHtml)
       .replace(/{{domain}}/gm, env.DEFAULT_DOMAIN)
       .replace(/{{site_name}}/gm, env.SITE_NAME)
   });
